@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "better-sqlite3": "^11.10.0",
+    "inquirer": "^12.6.0",
+    "node-fetch": "^3.3.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }, 
+  "scripts": {
+    "start": "ts-node src/main.ts"
+  },
+  "bin": "src/main.ts",
+  "pkg": {
+  "scripts": "src/**/*.ts",
+  "targets": ["node18-linux-x64", "node18-win-x64", "node18-macos-x64"] 
+  }
+}
