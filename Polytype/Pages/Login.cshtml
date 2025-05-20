@@ -1,0 +1,79 @@
+﻿@page "/login"
+
+<link href="css/Login.css" rel="stylesheet" />
+
+<div class="login-container">
+    <img src="~/imgs/signup_img.png" alt="Login" style="border-radius:32px 0 0 32px; width:650px; object-fit:cover;">
+    <div class="login-card">
+        <div id="toast-container" style="position: fixed; top: 32px; right: 32px; z-index: 9999;"></div>
+        <div class="login-title">Log In</div>
+        <div id="loginError" class="alert alert-danger" style="display:none; font-size:0.95rem; padding:8px 16px; margin-bottom:12px;"></div>
+        <form>
+            <div class="mb-3">
+                <input type="email" class="form-control" placeholder="Email" id="loginEmailInput" required />
+            </div>
+            <div class="mb-3 password-wrapper">
+                <input type="password" class="form-control"
+                       placeholder="Password" id="loginPasswordInput" required />
+                <img src="~/imgs/hide_icon.png"
+                     class="hide-icon"
+                     alt="Toggle password"
+                     data-visible="false"
+                     onclick="togglePasswordVisibility('loginPasswordInput', this)"
+                     style="user-select:none; cursor:pointer;" />
+            </div>
+            <button type="button" class="btn login-btn" onclick="validateLoginForm()">Log In</button>
+        </form>
+        <div class="mt-3 text-center">
+            Don't have an account? <a href="/signup" class="login-link signup">Sign Up</a>
+        
+        </div>
+        <div class="mt-3 text-center">
+            <a href="/forgot-password" class="login-link forgot">Forgot Password?</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function togglePasswordVisibility(inputId, icon) {
+        var input = document.getElementById(inputId);
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.add('active');
+            icon.setAttribute('data-visible', 'true');
+        } else {
+            input.type = "password";
+            icon.classList.remove('active');
+            icon.setAttribute('data-visible', 'false');
+        }
+    }
+
+    function showToast(message) {
+        var container = document.getElementById('toast-container');
+        var toast = document.createElement('div');
+        toast.className = 'error-toast-message';
+        toast.innerHTML = message;
+        container.appendChild(toast);
+
+        setTimeout(function () {
+            toast.classList.add('show');
+        }, 10);
+
+        setTimeout(function () {
+            toast.classList.remove('show');
+            setTimeout(function () {
+                container.removeChild(toast);
+            }, 400);
+        }, 2500);
+    }
+
+    function validateLoginForm() {
+        var email = document.getElementById('loginEmailInput').value.trim();
+        var password = document.getElementById('loginPasswordInput').value.trim();
+
+        if (email.indexOf('@@') === -1) { showToast("Email is invalid."); return false; }
+        if (!email) { showToast("Email is required."); return false; }
+        if (!password) { showToast("Password is required."); return false; }
+        // Add your login logic here
+    }
+</script>

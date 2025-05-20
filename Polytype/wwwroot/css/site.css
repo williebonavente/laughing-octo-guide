@@ -1,0 +1,256 @@
+@font-face {
+
+}
+
+
+body {
+    background: #f7f7f7;
+    margin: 0;
+/*   Gott be careful when deploying custom font might not load */
+    font-family: 'PP Neue Montreal', sans-serif;
+}
+
+.polytype-header {
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.polytype-header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    font-family:'Segoe UI', Arial, sans-serif;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 48px;
+}
+
+.polytype-logo {
+    font-size: 2rem;
+    font-weight: bold;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.polytype-logo-orange {
+    color: #ff6600;
+    font-weight: bold;
+}
+
+.polytype-logo-black {
+    color: #222;
+    font-weight: bold;
+}
+
+.polytype-header-buttons a {
+    margin-left: 16px;
+    padding: 8px 24px;
+    border-radius: 6px;
+    font-weight: 500;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background 0.2s, color 0.2s;
+}
+
+.polytype-btn {
+    background: #ff6600;
+    color: #fff;
+    border: 1px solid #ff6600;
+}
+
+    .polytype-btn:hover {
+        background: #e65c00;
+        color: #fff;
+    }
+
+.polytype-btn-outline {
+    background: #fff;
+    color: #ff6600;
+    border: 1px solid #ff6600;
+}
+
+    .polytype-btn-outline:hover {
+        background: #ff6600;
+        color: #fff;
+    }
+
+.polytype-main {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 40px 0;
+}
+
+.polytype-footer {
+    background: #fff;
+    border-top: 1px solid #eee;
+    text-align: center;
+    padding: 16px 0;
+    color: #888;
+    font-size: 1rem;
+}
+
+/*Home page Dir */
+.homepage-header {
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    padding: 0;
+}
+
+.homepage-header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 24px 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/*.header-spacer {
+    flex: 1;
+}*/
+
+.homepage-logo {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    width: 100%;
+    margin-left: 210px;
+}
+
+.homepage-btn-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.homepage-btn {
+    margin-left: 5px;
+    padding: 8px 24px;
+    border-radius: 12px;
+    font-weight: 500;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background 0.2s, color 0.2s;
+    border: 2px solid #ED5E20;
+}
+
+.homepage-btn-filled {
+    background: #ED5E20;
+    color: #fff;
+}
+
+.homepage-btn-outline {
+    background: #fff;
+    color: #ED5E20;
+}
+
+    .homepage-btn-filled:hover,
+    .homepage-btn-outline:hover {
+        background: #d94e0f;
+        color: #fff;
+        border-color: #d94e0f;
+    }
+
+
+.homepage-card-content {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    padding: 80px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-left: 220px;
+    padding-right: 200px;
+}
+
+    .homepage-card-content p {
+        text-align: justify;
+        justify-content: center;
+        max-width: 5000px; 
+        margin: 0 auto 36px auto; 
+        padding-left: 48px;
+        padding-right: 48px;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        max-width: 1000px;
+        padding-right: 40px;
+    }
+
+/* Keyboard images */
+.keyboard-img {
+    position: absolute;
+    width: 340px;
+    height: auto;
+    z-index: 1;
+}
+
+
+.homepage-card-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+}
+
+.homepage-card {
+    position: relative;
+    background: linear-gradient(90deg, #D7D7D6 1%, #F5F5F5 50%, #D7D7D6 100%);
+    border-radius: 32px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 1.5px 6px rgba(0,0,0,0.08);
+    max-width: 1000px;
+    width: 100%;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    border: none;
+    outline: 1px solid #000;
+}
+
+.keyboard-img {
+    position: absolute;
+    width: 260px;
+    height: auto;
+    z-index: 1;
+}
+
+.keyboard-img-left {
+    top: -1px;
+    left: -2px;
+}
+
+.keyboard-img-right {
+    bottom: -1px;
+    right: -2px;
+}
+
+.homepage-logo-large {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 16px;
+}
+
+.start-typing-btn {
+    padding: 14px 36px;
+    background: #ED5E20;
+    color: #fff;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 16px;
+    display: inline-block;
+    box-shadow: 0 0 16px 4px rgba(237, 94, 32, 0.25);
+    border: none;
+}

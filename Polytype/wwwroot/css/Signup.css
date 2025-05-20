@@ -1,0 +1,235 @@
+﻿/* TODO: Make this responsive later use media queries */
+.signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background: #f7f7f7;
+    padding-top: 30px;
+}
+
+.signup-card {
+    background: #fff;
+    border-radius: 32px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+    padding: 48px 40px;
+    min-width: 500px;
+    min-height: 51vh;
+    width: 100%;
+    margin-left: -110px;
+}
+
+/* signup card form */
+.signup-card form {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   width: 100%;
+   padding-left: 100px;
+}
+
+.signup-card .form-control {
+   background: #F5F5F5;
+/*   border: 1px solid #e0e0e0;*/
+   border-radius: 8px;
+   border: none;
+   width: 65%;
+   font-size: 1rem;
+   padding: 10px 15px;
+   box-sizing: border-box;
+}
+
+.signup-card .mb-3 {
+   margin-bottom: 10px !important; /* Reduce gap between fields */
+   width: 100%;
+}
+
+
+/* Centering the text */
+    .signup-card .mt-3 {
+        text-align: center;
+        width: 100%;
+        margin-top: 16px;
+        padding-left: 20px;
+        color: #7d7c7c;
+        font-weight: 400;
+    
+     }
+
+/* Checkbox */
+    /* Hide the default checkbox */
+    .signup-card .form-check-input {
+        appearance: none;
+        -webkit-appearance: none;
+        background-color: #D9D9D9;
+        border: 1.5px solid #bdbdbd;
+        width: 18px;
+        height: 18px;
+        border-radius: 4px;
+        position: relative;
+        cursor: pointer;
+        outline: none;
+        transition: background 0.2s, border 0.2s;
+        vertical-align: middle;
+        margin-right: 8px;
+    }
+
+        /* Show a checkmark when checked */
+        .signup-card .form-check-input:checked {
+            background-color: #ED5E20;
+            border-color: #ED5E20;
+        }
+
+            .signup-card .form-check-input:checked::after {
+                content: '';
+                display: block;
+                position: absolute;
+                left: 5px;
+                top: 2px;
+                width: 4px;
+                height: 8px;
+                border: solid #fff;
+                border-width: 0 2px 2px 0;
+                transform: rotate(45deg);
+            }
+
+
+
+.signup-card .form-check-label {
+    font-size: 0.82rem;
+    color: #666;
+}
+
+.signup-title {
+    font-size: 2.5rem;
+    font-weight: 500;
+    margin-bottom: 32px;
+    text-align: center;
+    color: #1E1E1E;
+    padding-top: 70px;
+}
+
+.signup-btn {
+    background: #ED5E20;
+    color: #ffff;
+    border: none;
+    width: 30%;
+    padding: 12px 0;
+    border-radius: 8px;
+    font-weight: 600;
+    margin-top: 24px;
+    margin-right: 158px;
+    font-size: 14px;
+    font-family: 'PP Neue Montreal', sans-serif;
+    cursor: pointer;
+    transition: transform 0.1s cubic-bezier(.4,0,.2,1), box-shadow 0.1s;
+    box-shadow: 0 2px 8px rgba(237,94,32,0.08);
+}
+
+    .signup-btn:hover {
+        background: #e65c00;
+    }
+
+    .signup-btn:active {
+        transform: scale(0.96);
+        box-shadow: 0 1px 2px rgba(237,94,32,0.12);
+    }
+
+.signup-link {
+    color: #ED5E20;
+    text-decoration: none;
+}
+
+    .signup-link:hover {
+        text-decoration: underline;
+    }
+
+
+
+/* Text Placeholder for inputs */
+.signup-card input::placeholder {
+    font-family: 'PP Neue Montreal', sans-serif;
+    color: #b0b0b0; /* Add this line for a more grayish look */
+}
+
+.signup-card input::-webkit-input-placeholder {
+    font-family: 'PP Neue Montreal', sans-serif;
+    color: #b0b0b0;
+}
+
+.signup-card input:-ms-input-placeholder {
+    font-family: 'PP Neue Montreal', sans-serif;
+    color: #b0b0b0;
+}
+
+.signup-card input::-ms-input-placeholder {
+    font-family: 'PP Neue Montreal', sans-serif;
+    color: #b0b0b0;
+}
+
+
+/* Password hider logo icon */
+
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+    .password-wrapper .form-control {
+        padding-right: 40px; /* Space for the icon */
+    }
+
+.hide-icon {
+    position: absolute;
+    top: 50%;
+    right: 38%;
+    transform: translateY(-50%);
+    width: 22px; /* Adjust size as needed */
+    height: 22px;
+    cursor: pointer;
+    opacity: 0.7;
+    filter: grayscale(10%);
+    transition: opacity 0.2s, filter 0.4s;
+}
+
+    .hide-icon:hover {
+        opacity: 1;
+    }
+
+    .hide-icon.active {
+        opacity: 1;
+        filter: grayscale(0%);
+    }
+
+.signup-card.fade-out {
+    animation: fadeOutCard 0.5s forwards cubic-bezier(.4,0,.2,1);
+}
+
+@keyframes fadeOutCard {
+    to {
+        opacity: 0;
+        transform: translateY(40px) scale(0.98);
+        filter: blur(2px);
+    }
+}
+
+.error-toast-message {
+    min-width: 220px;
+    max-width: 320px;
+    background: #ED5E20;
+    color: #fff;
+    padding: 14px 24px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    font-size: 1rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.4s, transform 0.4s;
+    pointer-events: none;
+}
+
+    .error-toast-message.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+

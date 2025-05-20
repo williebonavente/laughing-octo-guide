@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - PolyType</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Polytype.styles.css" asp-append-version="true" />
+    @*Custom fonts *@
+    <link href="https://fonts.cdnfonts.com/css/pp-neue-montreal" rel="stylesheet">
+</head>
+<body>
+
+    @if (IsSectionDefined("HomePageHeader"))
+    {
+        @RenderSection("HomePageHeader", required: false)
+    }
+
+    else
+    {
+        
+      <header class="homepage-header">
+        <div class="homepage-header-content">
+            <a class="homepage-logo" href="/">
+               <img src="~/imgs/polytype_logo_text.png" alt="PoltyType Logo" style="height: 28px;"/>
+            </a>
+            <div class="homepage-btn-container">
+            </div>
+        </div>
+    </header>
+    }
+    <main class="polytype-main">
+        @RenderBody()
+    </main>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

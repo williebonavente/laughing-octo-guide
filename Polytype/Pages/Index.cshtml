@@ -1,0 +1,41 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+@section HomePageHeader {
+    <header class="homepage-header">
+        <div class="homepage-header-content">
+            <a class="homepage-logo" href="/">
+               <img src="~/imgs/polytype_logo_text.png" alt="PoltyType Logo" style="height: 28px;"/>
+            </a>
+            <div class="homepage-btn-container">
+                <a href="/Login" class="homepage-btn homepage-btn-filled">Log In</a>
+                <a href="/Signup" class="homepage-btn homepage-btn-outline">Sign Up</a>
+            </div>
+        </div>
+    </header>
+}
+
+<div class="homepage-card-wrapper">
+    <div class="homepage-card">
+        <img src="~/imgs/keyboard_1.png" alt="Keyboard" class="keyboard-img keyboard-img-left" />
+        <div class="homepage-card-content">
+            <h2 style="font-size: 36px; font-weight: 500;">
+                Start Your <span style="color: #ED5E20;">Typing Journey</span> with
+            </h2>
+            <div class="homepage-logo-large">
+                <img src="~/imgs/polytype_logo_text.png" />
+            </div>
+            <p>
+                Practice your typing skills with <b>real-time feedback</b>, custom lessons, and a clean, focused interface designed for students who want to type <b>faster</b> and <b>smarter</b>.
+            </p>
+            <a href="/TypingTest" class="start-typing-btn">Start Typing</a>
+        </div>
+        <img src="~/imgs/keyboard_2.png" alt="Keyboard" class="keyboard-img keyboard-img-right">
+    </div>
+</div>
+
+
+
