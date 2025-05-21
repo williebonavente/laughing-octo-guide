@@ -1,0 +1,208 @@
+﻿.session-table-container {
+    display: flex;
+    flex-direction: row;
+    gap: 48px;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* Profile Part */
+
+.session-sidebar {
+    width: 340px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 1px solid #e0e0e0;
+    margin-top: -40px;
+    margin-left: -150px;
+    padding: 24px 0 24px 0;
+    height: 911px;
+}
+
+.session-profile-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+}
+
+.session-avatar {
+    width: 80px;
+    height: 80px;
+    margin-top: 60px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+}
+
+.session-welcome {
+    font-size: 1.1rem;
+    color: #222;
+    margin-bottom: 40px;
+}
+
+.session-name {
+    color: #ED5E20;
+    font-weight: 600;
+}
+
+.session-btn {
+    width: 200px;
+    padding: 10px 0;
+    border: 1px solid #ED5E20;
+    background: #fff;
+    color: #ED5E20;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    font-family: 'PP Neue Montreal', sans-serif;
+    margin-bottom: 2px;
+    font-weight: 500;
+}
+
+.session-btn.start {
+    background: #ED5E20;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.92rem;
+    font-family: 'PP Neue Montreal', sans-serif;
+    outline: none;
+    transition: background 0.2s, color 0.2s, 
+                transform 0.35s cubic-bezier(.4,1.4,.6,1), 
+                box-shadow 0.35s cubic-bezier(.4,1.4,.6,1);
+}
+
+.session-btn.start:hover {
+    background: #ED5E20;
+    color: #fff;
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+}
+
+.session-btn:hover {
+    background: #ED5E20;
+    color: #fff;
+}
+
+
+.session-dashboard-label {
+    font-size: .92rem;
+    color: #1E1E1E;
+    margin-bottom: 8px;
+    font-family: 'PP Neue Montreal', sans-serif;
+    text-align: center;
+    font-weight: 500;
+}
+
+.session-logout-btn {
+    width: 200px;
+    padding: 10px 0;
+    border: 1.5px solid #ED5E20;
+    background: #fff;
+    color: #ED5E20;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 320px;
+    font-family: 'PP Neue Montreal', sans-serif;
+    font-size: .92rem;
+    transition: background 0.2s, color 0.2s, transform 0.35s cubic-bezier(.4,1.4,.6,1), box-shadow 0.35s cubic-bezier(.4,1.4,.6,1);
+}
+
+    .session-logout-btn:hover {
+        color: #fff3ed;
+        background: #ED5E20;
+        transform: translateY(-3px) scale(1.04);
+        box-shadow: 0 6px 24px rgba(237,94,32,0.15);
+    }
+
+
+
+
+/* Table */
+
+.session-table-filters {
+    display: flex;
+    flex-direction: row ;
+    gap: 32px;
+    margin-bottom: 18px;
+    margin-left: 8px;
+}
+
+.session-filter-btn {
+    background: #fff;
+    border: 2px solid #ED5E20;
+    color: #ED5E20;
+    border-radius: 8px;
+    padding: 8px 48px;
+    font-size: 1.1rem;
+    font-family: 'PP Neue Montreal', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.2s, color 0.2s;
+}
+
+    .session-filter-btn:hover {
+        background: #ED5E20;
+        color: #fff;
+    }
+
+.session-table {
+    border-collapse: collapse;
+    width: 1000px;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    font-family: 'PP Neue Montreal', sans-serif;
+    border: 2px solid #ED5E20;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+    outline: 1px solid #ED5e20;
+}
+
+    .session-table th, .session-table td {
+        border: 1px solid #ED5E20;
+        padding: 24px 18px;
+        text-align: center;
+        font-size: 1rem;
+    }
+
+    .session-table th {
+        background: #ED5E20;
+        color: #fff;
+        font-weight: 700;
+        font-size: 1.1rem;
+    }
+
+.session-details {
+    min-width: 240px;
+    margin-left: 32px;
+}
+
+    .session-details h3 {
+        font-size: 24px;
+        font-weight: 500;
+        margin-top: 75px;
+        margin-left: -50px;
+        margin-bottom: 8px;
+        color: #1E1E1E;
+    }
+
+    .session-details hr {
+        border: none;
+        border-top: 2px solid #222;
+        width: 250px;
+        margin-left: -50px;
+        margin-bottom: 16px;
+    }
+
+.session-detail-list div {
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: #1e1e1e;
+    font-weight: 500;
+    margin-left: -50px;
+}

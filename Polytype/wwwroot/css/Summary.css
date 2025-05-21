@@ -1,0 +1,112 @@
+﻿.summary-container {
+    max-width: 800px;
+    margin: 60px auto 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.summary-title {
+    font-size: 3rem;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 18px;
+    color: #222;
+    font-family: 'PP Neue Montreal', sans-serif;
+}
+
+.summary-divider {
+    width: 80vw;
+    margin-left: -350px;
+    margin-bottom: 36px;
+    border: none;
+    border-top: 2px solid #888;
+}
+
+.summary-table-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.summary-table {
+    width: 1000px;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    font-family: 'PP Neue Montreal', sans-serif;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+    border: 2px solid #ED5E20;
+    outline: 1px solid #ED5E20;
+}
+
+.summary-table th,
+.summary-table td {
+    padding: 18px 16px;
+    font-size: 1.1rem;
+    text-align: left;
+    border-bottom: 1px solid #ED5E20;
+    vertical-align: top;
+}
+
+.summary-table th {
+    font-weight: 700;
+    width: 220px;
+    border-right: 1px solid #ED5E20;
+    
+}
+
+.summary-table tr:last-child th,
+.summary-table tr:last-child td {
+    border-bottom: none;
+}
+
+.summary-actions {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 36px;
+    width: 100%;
+}
+
+.summary-btn {
+    width: 240px;
+    padding: 12px 0;
+    border-radius: 8px;
+    font-size: 1.1rem;
+}    
+.summary-table th,
+.summary-table td {
+    padding: 18px 16px;
+    font-size: 1.1rem;
+    text-align: left;
+    border-bottom: 1px solid #ED5E20;
+
+    font-family: 'PP Neue Montreal', sans-serif;
+    font-weight: 600;
+    transition: background 0.2s, color 0.2s, border 0.2s;
+    cursor: pointer;
+
+}
+
+.summary-btn-primary {
+    background: #ED5E20;
+    color: #fff;
+    border: none;
+}
+
+.summary-btn-primary:hover {
+    background: #e65c00;
+}
+
+.summary-btn-outline {
+    background: #fff;
+    color: #222;
+    border: 2px solid #222;
+}
+
+.summary-btn-outline:hover {
+    background: #f7f7f7;
+}
+

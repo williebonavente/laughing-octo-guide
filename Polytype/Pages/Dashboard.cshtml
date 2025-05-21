@@ -1,0 +1,55 @@
+﻿@page "/dashboard"
+@{
+    Layout = "_Layout";
+}
+<link rel="stylesheet" href="~/css/Dashboard.css" />
+
+<div class="dashboard-container">
+    <div class="dashboard-sidebar">
+        <div class="dashboard-profile-card">
+            <img src="/imgs/user_profile.png" class="dashboard-avatar" alt="User Avatar" />
+            <div class="dashboard-welcome">
+                Welcome, <span class="dashboard-username">Vanness!</span>
+            </div>
+            <button class="dashboard-btn dashboard-btn-outline" onclick="goToDashboard()">Typing Dashboard Details</button>
+            <button class="dashboard-btn dashboard-btn-outline" onclick="goToPastSessions()">View Past Sessions</button>
+            <button class="dashboard-btn dashboard-btn-primary" onclick="goToPractice()">Start Practice</button>
+            <button class="dashboard-logout-btn" onclick="logout()">Log Out</button>
+        </div>
+    </div>
+    <div class="dashboard-main">
+        <div class="dashboard-section">
+            <h3>Heatmap (Typing Frequency & Error Heatmap)</h3>
+            <hr />
+        </div>
+        <div class="dashboard-section">
+            <h3>WPM / CPM Over Time (Graph View)</h3>
+            <hr />
+        </div>
+        <div class="dashboard-section">
+            <h3>Accuracy Progression</h3>
+            <hr />
+        </div>
+        <div class="dashboard-section">
+            <h3>Streak / Consistency Tracker</h3>
+            <hr />
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function goToDashboard() {
+            window.location.href = '/dashboard';
+        }
+        function goToPastSessions() {
+            window.location.href = '/past-sessions';
+        }
+        function goToPractice() {
+            window.location.href = '/practice';
+        }
+        function logout() {
+            window.location.href = '/login';
+        }
+    </script>
+}

@@ -1,0 +1,230 @@
+﻿body, html {
+    overflow: hidden;
+}
+@keyframes page-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(32px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.practice-mode-container {
+    display: flex;
+    background: #f7f7f7;
+    animation: page-fade-in 0.7s cubic-bezier(.4,1.4,.6,1);
+}
+
+.profile-sidebar {
+    width: 340px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-right: 1px solid #e0e0e0;
+    margin-top: -40px;
+    margin-left: -190px;
+    padding: 24px 0 24px 0;
+    height: 910px;
+}
+
+.profile-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px; 
+}
+
+.profile-avatar {
+    width: 80px;
+    height: 80px;
+    margin-top: 60px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+}
+
+.profile-welcome {
+    font-size: 1.1rem;
+    color: #222;
+    margin-bottom: 40px;
+}
+
+.profile-name {
+    color: #ED5E20;
+    font-weight: 600;
+}
+
+.sidebar-btn {
+    width: 200px;
+    padding: 10px 0;
+    border: 1px solid #ED5E20;
+    background: #fff;
+    color: #ED5E20;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    font-family: 'PP Neue Montreal', sans-serif;
+}
+
+.sidebar-btn-black {
+    color: #1E1E1E;
+    font-size: 12px; 
+    border: 1px solid #111;
+    transition: background 0.3s, color 0.3s, transform 0.2s;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+    .sidebar-btn-black:hover {
+        background: #333;
+        color: #fff;
+        transform: translateY(-3px) scale(1.04);
+        box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+    }
+
+.sidebar-btn.start {
+    background: #ED5E20;
+    color: #fff;
+    font-weight: 600;
+    font-size: 12px;
+    font-family: 'PP Neue Montreal', sans-serif;
+    outline: none;
+    transition: background 0.2s, color 0.2s, 
+                transform 0.35s cubic-bezier(.4,1.4,.6,1), 
+                box-shadow 0.35s cubic-bezier(.4,1.4,.6,1);
+}
+
+        .sidebar-btn.start:hover {
+            background: #ED5E20;
+            color: #fff;
+            transform: translateY(-3px) scale(1.04);
+            box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+        }
+
+
+.logout-btn {
+    width: 200px;
+    padding: 10px 0;
+    border: 1.5px solid #ED5E20;
+    background: #fff;
+    color: #ED5E20;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 400px;
+    transition: background 0.2s, color 0.2s;
+    font-family: 'PP Neue Montreal', sans-serif;     
+    font-weight: 600;
+    font-size: 12px;
+    transition: background 0.2s, 
+                color 0.2s, 
+                transform 0.35s cubic-bezier(.4,1.4,.6,1), 
+                box-shadow 0.35s cubic-bezier(.4,1.4,.6,1);
+}
+
+    .logout-btn:hover {
+        color: #fff3ed;
+        background: #ED5E20;
+        transform: translateY(-3px) scale(1.04);
+        box-shadow: 0 6px 24px rgba(237,94,32,0.15);
+    }
+
+.practice-main {
+    flex: 1;
+    padding: 36px 48px 0 48px;
+}
+
+.practice-title {
+    font-size: 2.5rem;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 32px;
+    color: #1E1E1E;
+    border-bottom: 2px solid #1E1E1E  ;
+    padding-bottom: 16px;
+    margin-top: -20px;
+    margin-left: 80px;
+}
+
+.practice-cards {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    margin-top: 70px;
+    margin-left: 80px;
+}
+
+.practice-card {
+    background: #fff;
+    border-radius: 50px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+    padding: 32px 24px 24px 24px;
+    width: 340px;
+    display: flex;
+    flex-direction: column;
+    min-height: 420px;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.practice-img {
+    width: 388px;
+    height: 401px;
+    object-fit: cover;
+    border-radius: 40px 40px 0 0;
+    margin-bottom: 40px;
+    margin-top: -32px;
+    align-self: center;
+
+}
+
+.practice-card h3 {
+    margin: 12px 0 8px 0;
+    font-size: 1.5rem;
+    font-weight: 500;
+    text-align: left;
+    align-self: flex-start;
+    width: 100%;
+}
+
+.practice-card p {
+    font-weight: 400;
+    font-size: 1rem;
+    color: #1E1E1E;
+    margin-bottom: 18px;
+    text-align: justify;
+    word-spacing: 8px;
+    font-size: 14px;
+    font-family: 'PP Neue Montreal', sans-serif;
+}
+
+.practice-btn {
+    border: 1.5px solid #ED5E20;
+    background: #fff;
+    color: #ED5E20;
+    border-radius: 8px;
+    padding: 10px 0;
+    width: 80%;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    margin-top: auto;
+    font-family: 'PP Neue Montreal', sans-serif;
+    margin-bottom: 50px;
+    font-weight: 500;
+}
+
+    .practice-btn:hover {
+        background: #ED5E20;
+        color: #fff;
+    }
+
+

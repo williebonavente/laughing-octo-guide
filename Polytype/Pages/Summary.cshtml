@@ -1,0 +1,53 @@
+﻿@page "/summary"
+@{
+    Layout = "_Layout";
+}
+<link rel="stylesheet" href="~/css/Summary.css" />
+
+<div class="summary-container">
+    <h1 class="summary-title">Here’s your Typing Summary!</h1>
+    <hr class="summary-divider" />
+    <div class="summary-table-wrapper">
+        <table class="summary-table">
+            <tr>
+                <th>Typed Characters</th>
+                <td id="typed-characters"></td>
+            </tr>
+            <tr>
+                <th>Time Elapsed</th>
+                <td id="time-elapsed"></td>
+            </tr>
+            <tr>
+                <th>WPM</th>
+                <td id="wpm"></td>
+            </tr>
+            <tr>
+                <th>CPM</th>
+                <td id="cpm"></td>
+            </tr>
+            <tr>
+                <th>Accuracy</th>
+                <td id="accuracy"></td>
+            </tr>
+            <tr>
+                <th>Recommendation</th>
+                <td id="recommendation"></td>
+            </tr>
+        </table>
+    </div>
+    <div class="summary-actions">
+        <button class="summary-btn summary-btn-primary" onclick="retry()">Retry</button>
+        <button class="summary-btn summary-btn-outline" onclick="mainMenu()">Main Menu</button>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function retry() {
+            window.location.href = '/practice';
+        }
+        function mainMenu() {
+            window.location.href = '/dashboard';
+        }
+    </script>
+}

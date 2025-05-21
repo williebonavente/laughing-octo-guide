@@ -1,0 +1,142 @@
+﻿
+.dashboard-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.dashboard-sidebar {
+    width: 340px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-right: 1px solid #e0e0e0;
+    margin-top: -40px;
+    margin-left: -950px;
+    padding: 24px 0 24px 0;
+    height: 910px;
+}
+
+.dashboard-profile-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+}
+
+.dashboard-avatar {
+    width: 80px;
+    height: 80px;
+    margin-top: 60px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+}
+
+.dashboard-welcome {
+    font-size: 1.1rem;
+    color: #222;
+    margin-bottom: 40px;
+}
+
+.dashboard-username {
+    color: #ED5E20;
+    font-weight: 600;
+}
+
+.dashboard-btn {
+    width: 200px;
+    padding: 10px 0;
+    border: 1px solid #ED5E20;
+    background: #fff;
+    color: #ED5E20;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    font-family: 'PP Neue Montreal', sans-serif;
+}
+
+.dashboard-btn-outline {
+    color: #1E1E1E;
+    font-size: 12px;
+    border: 1px solid #111;
+    transition: background 0.3s, color 0.3s, transform 0.2s;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+    .dashboard-btn-outline:hover {
+        background: #333;
+        color: #fff;
+        transform: translateY(-3px) scale(1.04);
+        box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+    }
+
+.dashboard-btn-primary {
+    background: #ED5E20;
+    color: #fff;
+    font-weight: 600;
+    font-size: 12px;
+    font-family: 'PP Neue Montreal', sans-serif;
+    outline: none;
+    transition: background 0.2s, color 0.2s, transform 0.35s cubic-bezier(.4,1.4,.6,1), box-shadow 0.35s cubic-bezier(.4,1.4,.6,1);
+}
+
+    .dashboard-btn-primary:hover {
+        background: #ED5E20;
+        color: #fff;
+        transform: translateY(-3px) scale(1.04);
+        box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+    }
+
+.dashboard-logout-btn {
+    width: 200px;
+    padding: 10px 0;
+    border: 1.5px solid #ED5E20;
+    background: #fff;
+    color: #ED5E20;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 400px;
+    font-family: 'PP Neue Montreal', sans-serif;
+    font-size: 12px;
+    transition: background 0.2s, color 0.2s, transform 0.35s cubic-bezier(.4,1.4,.6,1), box-shadow 0.35s cubic-bezier(.4,1.4,.6,1);
+}
+
+    .dashboard-logout-btn:hover {
+        color: #fff3ed;
+        background: #ED5E20;
+        transform: translateY(-3px) scale(1.04);
+        box-shadow: 0 6px 24px rgba(237,94,32,0.15);
+    }
+
+
+
+
+.dashboard-main {
+    flex: 1;
+    padding: 16px 48px 0 48px; /* Reduced top padding from 48px to 16px */
+    background: #f7f7f7;
+    overflow-y: auto; /* Optional: allows scrolling if content overflows */
+    min-height: 100vh; /* Ensures it fills the viewport */
+}
+
+.dashboard-section {
+    background: #f7f7f7;
+    margin-bottom: 32px; /* Reduced gap between sections */
+}
+
+.dashboard-section h3 {
+        font-size: 1.25rem;
+        font-weight: 500;
+        margin-bottom: 12px;
+        color: #222;
+    }
+
+
+/* Insert another css regarding in rendering the graphics for the visualization 
+    install another package for this one
+*/

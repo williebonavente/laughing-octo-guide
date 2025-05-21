@@ -1,0 +1,84 @@
+﻿@page "/sessions"
+@{
+    Layout = "_Layout";
+}
+<link rel="stylesheet" href="~/css/Sessions.css" />
+
+<div class="session-table-container">
+    <div class="session-sidebar">
+        <div class="session-profile-card">
+            <img src="/imgs/user_profile.png" class="session-avatar" alt="User Avatar" />
+            <div class="session-welcome">
+                Welcome, <span class="session-name">Vanness!</span>
+            </div>
+            <div class="session-dashboard-label">Typing Dashboard Details</div>
+            <button class="session-btn" onclick="goToPastSessions()">View Past Sessions</button>
+            <button class="session-btn start" onclick="startPractice()">Start Practice</button>
+            <button class="session-logout-btn" onclick="logout()">Log Out</button>
+        </div>
+    </div>
+
+
+    <div class="session-table-main">
+        <div class="session-table-filters">
+            <button class="session-filter-btn">Date</button>
+            <button class="session-filter-btn">WPM</button>
+            <button class="session-filter-btn">Accuracy</button>
+        </div>
+        <table class="session-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>WPM</th>
+                    <th>CPM</th>
+                    <th>Accuracy</th>
+                    <th>Duration</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @* Modify this for logic according to model *@
+                @* Insert Pagnation here *@
+                @for (int i = 0; i < 10; i++)
+                {
+                    <tr>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>6</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="session-details">
+        <h3>Session Details</h3>
+        <hr />
+        @* Implemen the logic here too, output must be came from model *@
+        <div class="session-detail-list">
+            <div>Duration:</div>
+            <div>Total Characters:</div>
+            <div>WPM:</div>
+            <div>CPM:</div>
+            <div>Accuracy:</div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function goToPastSessions() {
+            window.location.href = '/sessions'; // or your actual past sessions route
+        }
+        function startPractice() {
+            window.location.href = '/practice'; // or your actual practice route
+        }
+        function logout() {
+            window.location.href = '/login'; // or your actual logout/login route
+        }
+    </script>
+}
+
