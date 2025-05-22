@@ -1,0 +1,35 @@
+﻿@page "/Practices/TimeBased"
+
+
+@{
+    Layout = "_Layout";
+}
+<link rel="stylesheet" href="~/css/Practices/TimeBased.css" />
+
+<div class="practice-header">
+    <button class="back-btn" onclick="history.back()">&#8592;</button>
+    <div class="practice-controls">
+        <select id="modeSelect">
+            <option>Time-Based Mode</option>
+        </select>
+        <div class="time-options">
+            <button class="time-btn" onclick="setTime(15)">15s</button>
+            <button class="time-btn" onclick="setTime(30)">30s</button>
+            <button class="time-btn selected" onclick="setTime(60)">60s</button>
+            <button class="time-btn" onclick="setTime(120)">120s</button>
+        </div>
+    </div>
+</div>
+<hr/>
+<div class="timer" id="timer">01:00</div>
+<div class="words-cotainer">
+
+<div class="words" id="words">
+    <!-- Words will be injected here -->
+</div>
+</div>
+
+ 
+    <script src="@Url.Content("~/js/Practices/TimeBased.js")"></script>
+    <script src="/_framework/aspnetcore-browser-refresh.js"></script>
+

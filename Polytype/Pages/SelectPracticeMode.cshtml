@@ -25,7 +25,7 @@
                 <p>
                     Race against the clock and improve your typing speed under pressure. Choose a time limit,file type as much as you can, and track your WPM and accuracy in real-time.
                 </p>
-                <button class="practice-btn" onclick="goToPractice()">Start Practice</button>
+                <button class="practice-btn" onclick="goToPractice('time')">Start Practice</button>
             </div>
             <div class="practice-card">
                 <img src="/imgs/word_based.png" alt="Word-Count-Based" class="practice-img" />
@@ -33,7 +33,7 @@
                 <p>
                     Focus on precision and pacing by typing a set number of words. Great for building consistency and mastering flow without time pressure.
                 </p>
-                <button class="practice-btn" onclick="goToPractice()">Start Practice</button>
+                <button class="practice-btn" onclick="goToPractice('words')">Start Practice</button>
             </div>
             <div class="practice-card">
                 <img src="/imgs/character_based.png" alt="Character-Based" class="practice-img" />
@@ -41,7 +41,7 @@
                 <p>
                     Sharpen your attention to detail with exercises based on specific character limits. Perfect for improving accuracy, rhythm, and control over short bursts of text.
                 </p>
-                <button class="practice-btn" onclick="goToPractice()">Start Practice</button>
+                <button class="practice-btn" onclick="goToPractice('character')">Start Practice</button>
             </div>
         </div>
     </div>
@@ -55,8 +55,14 @@
         function goToPastSessions() {
             window.location.href = '/sessions';
         }
-        function goToPractice() {
-            window.location.href = '/practice';
+        function goToPractice(mode) {
+            if (mode == 'time') {
+                window.location.href = '/Practices/TimeBased';
+            } else if (mode === 'words') {
+                window.location.href = '/Practices/WordBased'; 
+            } else if (mode === 'character') {
+                window.location.href = '/Practices/CharacterBased';
+            } 
         }
         function logout() {
             window.location.href = '/login';

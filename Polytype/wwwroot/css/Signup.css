@@ -16,8 +16,8 @@
     justify-content: center;
     align-items: flex-start;
     background: #f7f7f7;
-    animation: page-fade-in 0.7s cubic-bezier(.4,1.4,.6,1);
     padding-top: 30px;
+    animation: page-fade-in 0.7s cubic-bezier(.4,1.4,.6,1);
 }
 
 .signup-card {
@@ -28,7 +28,6 @@
     min-width: 500px;
     min-height: 51vh;
     width: 100%;
-    animation: page-fade-in 0.7s cubic-bezier(.4,1.4,.6,1);
     margin-left: -110px;
 }
 

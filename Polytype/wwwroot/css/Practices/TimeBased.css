@@ -1,0 +1,190 @@
+﻿/**/
+
+.practice-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2.5rem 2rem 0 2rem;
+}
+
+.practice-controls {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+
+.back-btn {
+    width: 48px;
+    height: 48px;
+    border: 2px solid #222;
+    border-radius: 50%;
+    background: transparent;
+    font-size: 1.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+    margin-right: 1000px;
+}
+
+    .back-btn:hover {
+        background: #f0f0f0;
+        box-shadow: 0 2px 8px #0001;
+    }
+
+.mode-select {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+#modeSelect {
+    font-size: 1.1rem;
+    padding: 0.7em 2.5em 0.7em 1em;
+    border: 2px solid #222;
+    border-radius: 12px;
+    background: #fff;
+    font-weight: 500;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+    min-width: 240px;
+    margin-right: 0.5rem;
+    background-image: url("data:image/svg+xml,%3Csvg width='16' height='10' viewBox='0 0 16 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L8 8L15 1' stroke='black' stroke-width='2'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1em center;
+    background-size: 1.2em;
+    font-family: 'PP Neue Montreal', sans-serif;
+}
+
+
+.time-options {
+    display: flex;
+    align-items: center;
+    border: 2px solid #222;
+    border-radius: 12px;
+    padding: 0.2em 0.7em;
+    background: #fff;
+    gap: 0.5em;
+    font-family: 'PP Neue Montreal', sans-serif;
+}
+
+.timer {
+    font-family: 'Geist Mono', monospace;
+    font-size: 2.5rem;
+    color: #ff6a00;
+    text-align: center;
+    margin: 1em 0;
+    transition: color 0.3s;
+}
+
+    .timer.warning {
+        color: #ff0000;
+        animation: pulse 1s infinite;
+    }
+
+@keyframes pulse {
+    0% {
+        text-shadow: 0 0 0 #ff0000;
+    }
+
+    50% {
+        text-shadow: 0 0 10px #ff0000;
+    }
+
+    100% {
+        text-shadow: 0 0 0 #ff0000;
+    }
+}
+
+.time-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #222;
+    padding: 0.5em 0.7em;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: color 0.2s, background 0.2s;
+    font-family: 'PP Neue Montreal', sans-serif;
+}
+    .time-btn.selected,
+    .time-btn:focus {
+        color: #ff6a00;
+        background: transparent;
+        outline: none;
+        font-weight: 700;
+    }
+
+    .time-btn:hover:not(.selected) {
+        background: #f5f5f5;
+    }
+
+words-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.words {
+    max-width: 900px;
+    text-align: justify;
+/*    margin: 0 auto;*/
+    font-size: 2rem;
+    line-height: 1.6;
+}
+
+.word {
+    font-family: 'Geist Mono', monospace;
+    font-size: 32px;
+    transition: background 0.2s, color 0.2s;
+    padding: 0 2px;
+    text-align: justify;
+
+}
+
+    .word.current {
+        background: #ff6a0022;
+        color: #ff6a00;
+        border-radius: 4px;
+        box-shadow: 0 2px 8px #ffe06655;
+    }
+
+    .word.correct {
+        color: #4caf50;
+    }
+
+    .word.incorrect {
+        color: #f44336;
+        text-decoration: underline wavy #f44336;
+    }
+
+hr {
+    border-top: 2px solid rgba(30, 30, 30, 0.7);
+    margin: 2rem 2rem 0 2rem;
+    width: 83%;
+}
+
+
+/* Migh import this into another typing practice type */
+.caret {
+    display: inline-block;
+    width: 2px;
+    height: 1.2em;
+    background: #222;
+    vertical-align: bottom;
+    animation: blink 1s steps(1) infinite;
+}
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+.correct-char {
+    color: #4caf50;
+}
+.incorrect-char {
+    color: #f44336;
+    text-decoration: underline wavy #f44336;
+}
