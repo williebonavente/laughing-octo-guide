@@ -1,35 +1,62 @@
-﻿let time = 60;
-let timerInterval;
+﻿import { TypingStats } from './TypingLogic.js';
+import { words } from './WordList.js'; 
+
+let stats = new TypingStats();
+
+// Separate this into another module
+let time = 60;
+let timerInterval = 0;
 let timeLeft = time;
 let timerActive = true;
 
-
-let words = [
-    "Senator", "chairman", "live", "calling", "assembly", "may", "clicking", "needs", "proposal", "articles", "pork", "listing",
-    "belfast", "emphasis", "religion", "manitoba", "pepper", "factors", "outlook", "charger", "tomorrow", "partners",
-    "dialog", "up", "remained", "slovenia", "buys", "features", "utilization", "occasionally", "fire", "attend", "shift",
-    "reasonably", "thing", "zip", "factors", "thorough"
-];
-let currentWord = 0;
+let currentWord = 0; 
 let currentInput = "";
 
+let lastCaretLine = getWordLine(0);
 
-function setTime(t) {
+
+let userInputs = [];
+
+function setTime(t, event) {
     time = t;
     timeLeft = t;
     document.getElementById('timer').textContent = formatTime(t);
     document.querySelectorAll('.time-btn').forEach(btn => btn.classList.remove('selected'));
-    event.target.classList.add('selected');
+    if (event) event.target.classList.add('selected');
     resetPractice();
 }
+
+function getWordLine(wordIndex) {
+    const wordSpan = document.getElementById(`word${wordIndex}`);
+    if (!wordSpan) return -1;
+    return wordSpan.offsetTop;
+}
+
+function checkCaretLineChange() {
+    const currLine = getWordLine(currentWord);
+    if (currLine !== -1 && currLine !== lastCaretLine) {
+        // Caret moved to a new line
+        const caret = document.querySelector('.caret');
+        if (caret) {
+            caret.classList.add('new-line');
+            setTimeout(() => caret.classList.remove('new-line'), 200);
+        }
+        lastCaretLine = currLine;
+        // Optionally, trigger any other logic here
+        console.log(lastCaretLine);
+    }
+}
+
+
+
 function formatTime(seconds) {
     const m = Math.floor(seconds / 60).toString().padStart(2, '0');
     const s = (seconds % 60).toString().padStart(2, '0');
     return `${m}:${s}`;
 }
 
-
 function startTimer() {
+    if (timerInterval) clearInterval(timerInterval);
     timerActive = true;
     timerInterval = setInterval(() => {
         timeLeft--;
@@ -37,10 +64,18 @@ function startTimer() {
         if (timeLeft <= 0) {
             clearInterval(timerInterval);
             timerActive = false;
-            // Optionally, show a message: 
-            // document.getElementById('timer').textContent = "Time's up!";
+            disableTyping();
+             // Redirect this into another module 
+             document.getElementById('timer').textContent = "Time's up!";
         }
     }, 1000);
+}
+function isNewVisualLine(currentWord) {
+    if (currentWord === 0) return false;
+    const prevWordSpan = document.getElementById(`word${currentWord - 1}`);
+    const currWordSpan = document.getElementById(`word${currentWord}`);
+    if (!prevWordSpan || !currWordSpan) return false;
+    return prevWordSpan.offsetTop !== currWordSpan.offsetTop;
 }
 
 function updateTimer() {
@@ -52,41 +87,102 @@ function updateTimer() {
         timer.classList.remove('warning');
     }
 }
-
-function renderWords() {
+function initialRenderWords() {
     const wordsDiv = document.getElementById('words');
-    wordsDiv.innerHTML = words.map((word, i) => {
-        if (i === currentWord) {
-            let chars = '';
-            // If nothing typed yet, caret at the start
-            if (currentInput.length === 0) {
-                chars += `<span class="caret"></span>`;
-            }
-            for (let j = 0; j < word.length; j++) {
-                let charClass = '';
-                if (j < currentInput.length) {
-                    charClass = currentInput[j] === word[j] ? 'correct-char' : 'incorrect-char';
-                }
-                // Add caret after the last typed character
-                if (j === currentInput.length && currentInput.length !== 0) {
-                    chars += `<span class="caret"></span>`;
-                }
-                chars += `<span class="char ${charClass}">${word[j]}</span>`;
-            }
-            // If caret is at the end
-            if (currentInput.length === word.length) {
-                chars += `<span class="caret"></span>`;
-            }
-            return `<span class="word current" id="word${i}">${chars}</span>`;
+    wordsDiv.innerHTML = words.map((word, i) =>
+        `<span class="word" id="word${i}">${word}</span>${i < words.length - 1 ? ' ' : ''}`
+    ).join('');
+}
+
+//function updateCurrentWordDisplay() {
+//    const wordSpan = document.getElementById(`word${currentWord}`);
+//    if (!wordSpan) return;
+
+//    let word = words[currentWord];
+//    let html = '';
+
+//    // 1. Render typed characters (correct/incorrect)
+//    for (let j = 0; j < currentInput.length && j < word.length; j++) {
+//        let charClass = currentInput[j] === word[j] ? 'correct-char' : 'incorrect-char';
+//        html += `<span class="char ${charClass}">${word[j]}</span>`;
+//    }
+
+//    //// 2. Render caret (always after last typed character, or at start if nothing typed)
+//    html += `<span class="caret" aria-live="polite" aria-label="Caret"></span>`;
+
+//    // 3. Render remaining (untyped) characters
+//    for (let j = currentInput.length; j < word.length; j++) {
+//        let charClass = '';
+//        if (j < currentInput.length) {
+//            charClass = currentInput[j] === word[j] ? 'correct-char' : 'incorrect-char';
+//        }
+//        html += `<span class="char">${word[j]}</span>`;
+//    }
+
+//    wordSpan.innerHTML = html;
+//    wordSpan.classList.add('current');
+//}
+
+
+function updateCurrentWordDisplay() {
+    const wordSpan = document.getElementById(`word${currentWord}`);
+    if (!wordSpan) return;
+
+    const word = words[currentWord];
+    let html = '';
+
+    let caretInserted = false;
+
+    for (let j = 0; j < word.length; j++) {
+        let char = word[j];
+        let charClass = '';
+
+        if (j < currentInput.length) {
+            charClass = currentInput[j] === char ? 'correct-char' : 'incorrect-char';
+            html += `<span class="char ${charClass}">${char}</span>`;
         } else {
-            let wordClass = '';
-            if (i < currentWord) {
-                wordClass = 'correct';
+            // insert caret just before the first untyped character
+            if (!caretInserted) {
+                html += `<span class="caret" aria-live="polite" aria-label="Caret"></span>`;
+                caretInserted = true;
             }
-            //return `<span class="word ${wordClass}" id="word${i}">${word}</span>`;
-            return `<span class="word ${wordClass}" id="words${i}">${word}</span>${i < words.length - 1 ? ' ' : ''}`;
+            html += `<span class="char">${char}</span>`;
         }
-    }).join(' ');
+    }
+
+    // If word is completely typed, caret goes at the end
+    if (!caretInserted) {
+        html += `<span class="caret" aria-live="polite" aria-label="Caret"></span>`;
+    }
+
+    wordSpan.innerHTML = html;
+    wordSpan.classList.add('current');
+}
+
+
+function updateWordClasses() {
+    for (let i = 0; i < words.length; i++) {
+        const wordSpan = document.getElementById(`word${i}`);
+        if (!wordSpan) continue;
+        wordSpan.classList.remove('current', 'correct');
+        if (i < currentWord) wordSpan.classList.add('correct');
+        if (i === currentWord) wordSpan.classList.add('current');
+    }
+}
+
+function updatePreviousWordDisplay(wordIndex) {
+    const wordSpan = document.getElementById(`word${wordIndex}`);
+    if (!wordSpan) return;
+    const input = userInputs[wordIndex] || "";
+    let wordHtml = '';
+    for (let j = 0; j < words[wordIndex].length; j++) {
+        let charClass = '';
+        if (j < input.length) {
+            charClass = input[j] === words[wordIndex][j] ? 'correct-char' : 'incorrect-char';
+        }
+        wordHtml += `<span class="char ${charClass}">${words[wordIndex][j]}</span>`;
+    }
+    wordSpan.innerHTML = wordHtml;
 }
 
 function updateCurrentWordClass(isCorrect) {
@@ -97,47 +193,141 @@ function updateCurrentWordClass(isCorrect) {
     if (isCorrect === true) wordSpan.classList.add('correct');
     else if (isCorrect === false) wordSpan.classList.add('incorrect');
 }
-
-document.addEventListener('keydown', function (e) {
-    if (!timerActive) return; // Block typing if timer is done
-    if (currentWord >= words.length) return; // Stop if finished
-    if (e.key === ' ' || e.key === 'Enter') {
+function handleKeydown(e) {
+    if (!timerActive) return;
+    if (currentWord >= words.length) {
+        disableTyping();
+        clearInterval(timerInterval);
+        document.getElementById('timer').textContent = "Completed";
+        return;
+    }
+    if (e.key === ' ') {
         e.preventDefault();
-        if (currentInput.trim() === words[currentWord]) {
+        if (currentInput.trim() === "") {
+            return;
+        }
+        userInputs[currentWord] = currentInput;
+        if (currentInput.trim() === words[currentWord].trim()) {
             updateCurrentWordClass(true);
         } else {
             updateCurrentWordClass(false);
         }
-        renderWords();
-        currentWord++;
+        
+        for (let i = 0; i <= currentWord; i++) {
+            updatePreviousWordDisplay(i);
+        }
         currentInput = "";
+        currentWord++;
+        updateWordClasses();
+        updateCurrentWordDisplay();
+        checkCaretLineChange();
+
+        if (currentWord >= words.length) {
+            disableTyping();
+            clearInterval(timerInterval);
+            document.getElementById('timer').textContent = "Completed";
+            return;
+        }
+
+        if (isNewVisualLine(currentWord)) {
+            const caret = document.querySelector('.caret');
+            if (caret) {
+                caret.classList.add('new-line');
+                setTimeout(() => caret.classList.remove('new-line'), 200);
+            }
+            console.log(`Moved to a new visual line at word index: ${currentWord}`);
+
+        }
+
+        const prevLine = getWordLine(currentWord - 1);
+        const currLine = getWordLine(currentWord);
+        if (prevLine !== -1 && currLine !== -1 && prevLine !== currLine) {
+            const caret = document.querySelector('.caret');
+            if (caret) {
+                caret.classList.add('new-line');
+                setTimeout(() => caret.classList.remove('new-line'), 200);
+            }
+            console.log(`Caret moved to a new line at word index: ${currentWord}`);
+        }
+
     } else if (e.key.length === 1) {
         currentInput += e.key;
-        renderWords();
+        updateWordClasses();
+        checkCaretLineChange();
+        updateCurrentWordDisplay();
     } else if (e.key === 'Backspace') {
         currentInput = currentInput.slice(0, -1);
-        renderWords();
+        //renderWords();
+        updateWordClasses();
+        updateCurrentWordDisplay();
+        logCaretPosition();
+        checkCaretLineChange();
     }
+}
 
-//    // Redirection here
-//    if (timeLeft <= 0) {
-//        clearInterval(timerInterval);
-//        timerActive = false;
-//        // Redirect to summary page 
-//    }
-});
+let typingEnabled = false;
+
+function enableTyping(){
+    if (!typingEnabled) {
+        document.addEventListener('keydown', handleKeydown);
+        typingEnabled = true;
+    }
+}
+
+function disableTyping() {
+    if (typingEnabled) {
+        document.removeEventListener('keydown', handleKeydown);
+        typingEnabled = false;
+    }
+}
+
+console.log('WPM: ', stats.getWPM());
+console.log('CPM: ', stats.getCPM());
+console.log("Accuracy: ", stats.getAccuracy(), '%');
 
 function resetPractice() {
     clearInterval(timerInterval);
     currentWord = 0;
     currentInput = "";
-    renderWords();
+    stats.reset();
+    userInputs = [];
+    initialRenderWords();
+    updateWordClasses();
+    updateCurrentWordDisplay();
     updateTimer();
-    setTimeout(startTimer, 500);
+    disableTyping();
+    enableTyping(); 
+    setTimeout(() => {
+        stats.start();
+        startTimer();
+    }, 500);
 }
 
 window.onload = function () {
-    renderWords();
+    //renderWords();
+    const typingInput = document.getElementById('typingInput');
+    typingInput.addEventListener('input', (e) => {
+        currentInput = e.target.value;
+        caretIndex = typingInput.selectionStart;
+        updateWordClasses();
+        updateCurrentWordDisplay();
+
+    });
+
+    typingInput.addEventListener('keydown', (e) => {
+        // Update caretIndex on navigation keys (arrows, backpsace etc.)
+        setTimeout(() => {
+            caretIndex = typingInput.selectionStart;
+            updateCurrentWordDisplay();
+        }, 0);
+    });
+    initialRenderWords();
+    updateWordClasses();
+    updateCurrentWordDisplay();
+    disableTyping();
+    enableTyping();
     updateTimer();
     setTimeout(startTimer, 500);
+
+
 };

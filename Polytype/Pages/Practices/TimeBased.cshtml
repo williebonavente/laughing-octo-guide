@@ -22,14 +22,12 @@
 </div>
 <hr/>
 <div class="timer" id="timer">01:00</div>
-<div class="words-cotainer">
-
-<div class="words" id="words">
-    <!-- Words will be injected here -->
-</div>
+<div class="words-container">
+<div class="words" id="words"></div>
+    <input id="typingInput" autocomplete="off" autocorrect="off" spellcheck="false" style="opacity:0;position:absolute;left:-9999px;" />
 </div>
 
- 
-    <script src="@Url.Content("~/js/Practices/TimeBased.js")"></script>
+    @* <script src="@Url.Content("~/js/Practices/TimeBased.js")"></script> *@
+    <script type="module" src="@Url.Content("~/js/Practices/TimeBased.js")"></script>
     <script src="/_framework/aspnetcore-browser-refresh.js"></script>
 

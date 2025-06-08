@@ -1,5 +1,4 @@
-﻿/**/
-
+﻿
 .practice-header {
     display: flex;
     align-items: center;
@@ -122,18 +121,18 @@
         background: #f5f5f5;
     }
 
-words-container {
+.words-container {
     display: flex;
     justify-content: center;
-    width: 100%;
 }
 
 .words {
     max-width: 900px;
     text-align: justify;
-/*    margin: 0 auto;*/
+    margin: 0 auto;
     font-size: 2rem;
     line-height: 1.6;
+    white-space: pre-wrap;
 }
 
 .word {
@@ -141,8 +140,8 @@ words-container {
     font-size: 32px;
     transition: background 0.2s, color 0.2s;
     padding: 0 2px;
-    text-align: justify;
-
+    margin-right: 4px;
+    display: inline-block;
 }
 
     .word.current {
@@ -152,13 +151,13 @@ words-container {
         box-shadow: 0 2px 8px #ffe06655;
     }
 
-    .word.correct {
+    /*.word.correct {
         color: #4caf50;
-    }
+    }*/
 
     .word.incorrect {
-        color: #f44336;
-        text-decoration: underline wavy #f44336;
+        color: #d7d8d4;
+/*        text-decoration: underline wavy #f44336;*/
     }
 
 hr {
@@ -171,20 +170,49 @@ hr {
 /* Migh import this into another typing practice type */
 .caret {
     display: inline-block;
-    width: 2px;
-    height: 1.2em;
+    width: 1px;
+    height: 1em;
     background: #222;
-    vertical-align: bottom;
+    vertical-align: middle;
     animation: blink 1s steps(1) infinite;
+    transition: background 0.2s; 
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    z-index: 2;
 }
+
+    .caret.new-line {
+        background: #ED5E20;
+        box-shadow: 0 0 8px #ED5E20; /* Glow effect */
+        animation: none;
+    }
+
+
 @keyframes blink {
     0%, 50% { opacity: 1; }
     51%, 100% { opacity: 0; }
 }
+
+@keyframes caret-pulse {
+    0% {
+        transform: scaleY(1);
+    }
+
+    50% {
+        transform: scaleY(1.5);
+    }
+
+    100% {
+        transform: scaleY(1);
+    }
+}
+
 .correct-char {
     color: #4caf50;
 }
 .incorrect-char {
     color: #f44336;
-    text-decoration: underline wavy #f44336;
+    text-decoration: underline wavy #f44336 !important;
 }
+
