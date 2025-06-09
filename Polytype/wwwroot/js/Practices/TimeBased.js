@@ -8,14 +8,12 @@ let time = 60;
 let timerInterval = 0;
 let timeLeft = time;
 let timerActive = true;
-
 let currentWord = 0; 
 let currentInput = "";
-
 let lastCaretLine = getWordLine(0);
-
-
 let userInputs = [];
+
+console.log(stats.start());
 
 function setTime(t, event) {
     time = t;
@@ -47,8 +45,6 @@ function checkCaretLineChange() {
     }
 }
 
-
-
 function formatTime(seconds) {
     const m = Math.floor(seconds / 60).toString().padStart(2, '0');
     const s = (seconds % 60).toString().padStart(2, '0');
@@ -67,6 +63,7 @@ function startTimer() {
             disableTyping();
              // Redirect this into another module 
              document.getElementById('timer').textContent = "Time's up!";
+            showResults();
         }
     }, 1000);
 }
@@ -93,36 +90,6 @@ function initialRenderWords() {
         `<span class="word" id="word${i}">${word}</span>${i < words.length - 1 ? ' ' : ''}`
     ).join('');
 }
-
-//function updateCurrentWordDisplay() {
-//    const wordSpan = document.getElementById(`word${currentWord}`);
-//    if (!wordSpan) return;
-
-//    let word = words[currentWord];
-//    let html = '';
-
-//    // 1. Render typed characters (correct/incorrect)
-//    for (let j = 0; j < currentInput.length && j < word.length; j++) {
-//        let charClass = currentInput[j] === word[j] ? 'correct-char' : 'incorrect-char';
-//        html += `<span class="char ${charClass}">${word[j]}</span>`;
-//    }
-
-//    //// 2. Render caret (always after last typed character, or at start if nothing typed)
-//    html += `<span class="caret" aria-live="polite" aria-label="Caret"></span>`;
-
-//    // 3. Render remaining (untyped) characters
-//    for (let j = currentInput.length; j < word.length; j++) {
-//        let charClass = '';
-//        if (j < currentInput.length) {
-//            charClass = currentInput[j] === word[j] ? 'correct-char' : 'incorrect-char';
-//        }
-//        html += `<span class="char">${word[j]}</span>`;
-//    }
-
-//    wordSpan.innerHTML = html;
-//    wordSpan.classList.add('current');
-//}
-
 
 function updateCurrentWordDisplay() {
     const wordSpan = document.getElementById(`word${currentWord}`);
@@ -159,7 +126,6 @@ function updateCurrentWordDisplay() {
     wordSpan.classList.add('current');
 }
 
-
 function updateWordClasses() {
     for (let i = 0; i < words.length; i++) {
         const wordSpan = document.getElementById(`word${i}`);
@@ -169,7 +135,6 @@ function updateWordClasses() {
         if (i === currentWord) wordSpan.classList.add('current');
     }
 }
-
 function updatePreviousWordDisplay(wordIndex) {
     const wordSpan = document.getElementById(`word${wordIndex}`);
     if (!wordSpan) return;
@@ -199,10 +164,16 @@ function handleKeydown(e) {
         disableTyping();
         clearInterval(timerInterval);
         document.getElementById('timer').textContent = "Completed";
+        // Redirect into the result page 
         return;
     }
     if (e.key === ' ') {
         e.preventDefault();
+        stats.registerInput(currentInput, words[currentWord]);
+        console.log(stats.getElapsedMinutes());
+        console.log('WPM: ', stats.getWPM());
+        console.log('CPM:', stats.getCPM());
+        console.log('Accuracy: ', stats.getAccuracy());
         if (currentInput.trim() === "") {
             return;
         }
@@ -212,7 +183,7 @@ function handleKeydown(e) {
         } else {
             updateCurrentWordClass(false);
         }
-        
+
         for (let i = 0; i <= currentWord; i++) {
             updatePreviousWordDisplay(i);
         }
@@ -226,6 +197,7 @@ function handleKeydown(e) {
             disableTyping();
             clearInterval(timerInterval);
             document.getElementById('timer').textContent = "Completed";
+            showResults();
             return;
         }
 
@@ -252,16 +224,17 @@ function handleKeydown(e) {
 
     } else if (e.key.length === 1) {
         currentInput += e.key;
+        //stats.registerInput(currentInput, words[currentWord]);
         updateWordClasses();
         checkCaretLineChange();
         updateCurrentWordDisplay();
     } else if (e.key === 'Backspace') {
         currentInput = currentInput.slice(0, -1);
-        //renderWords();
         updateWordClasses();
         updateCurrentWordDisplay();
         logCaretPosition();
         checkCaretLineChange();
+        stats.recordBackspace && stats.recordBackspace();
     }
 }
 
@@ -281,10 +254,6 @@ function disableTyping() {
     }
 }
 
-console.log('WPM: ', stats.getWPM());
-console.log('CPM: ', stats.getCPM());
-console.log("Accuracy: ", stats.getAccuracy(), '%');
-
 function resetPractice() {
     clearInterval(timerInterval);
     currentWord = 0;
@@ -302,6 +271,17 @@ function resetPractice() {
         startTimer();
     }, 500);
 }
+
+
+// Showing stats
+function showResults() {
+    const wpm = stats.getWPM();
+    const cpm = stats.getCPM();
+    const accuracy = stats.getAccuracy();
+    // render this on like vim focus mode
+    alert(`WPM: ${wpm}\nCPM: ${cpm}\nAccuracy: ${accuracy}`);
+}
+
 
 window.onload = function () {
     //renderWords();
