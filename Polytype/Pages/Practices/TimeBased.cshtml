@@ -11,12 +11,16 @@
     <div class="practice-controls">
         <select id="modeSelect">
             <option>Time-Based Mode</option>
+            @* It should redirect in to the word-based mode 
+            Later to be inserted
+            *@
+            <option>Word-Based Mode</option>
         </select>
         <div class="time-options">
-            <button class="time-btn" onclick="setTime(15)">15s</button>
-            <button class="time-btn" onclick="setTime(30)">30s</button>
-            <button class="time-btn selected" onclick="setTime(60)">60s</button>
-            <button class="time-btn" onclick="setTime(120)">120s</button>
+            <button class="time-btn">15s</button>
+            <button class="time-btn">30s</button>
+            <button class="time-btn selected">60s</button>
+            <button class="time-btn">120s</button>
         </div>
     </div>
 </div>
@@ -26,12 +30,19 @@
 <div class="words" id="words"></div>
     <input id="typingInput" autocomplete="off" autocorrect="off" spellcheck="false" style="opacity:0;position:absolute;left:-9999px;" />
 </div>
-<div id="results" style="display:none;">
-   <h3>Results</h3>
-   <p id="wpm"></p>
-   <p id="cpm"></p>
-   <p id="accuracy"></p>
+
+
+<div id="resultsModal" class="vim-modal">
+    <div class="vim-modal-content">
+        <h2>Results</h2>
+        <div id="vimStats"></div>
+        <div class="vim-container-btn">
+        <button id="saveResultsBtn" class="vim-save-btn">Save</button>
+        <button id="closeResultsBtn" class="vim-close-btn">Close (Esc)</button>
+        </div>
+    </div>
 </div>
+
 
     @* <script src="@Url.Content("~/js/Practices/TimeBased.js")"></script> *@
     <script type="module" src="@Url.Content("~/js/Practices/TimeBased.js")"></script>

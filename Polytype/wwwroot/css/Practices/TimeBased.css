@@ -216,3 +216,122 @@ hr {
     text-decoration: underline wavy #f44336 !important;
 }
 
+
+/* Modal Styling */
+.vim-modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.vim-modal.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.vim-modal.exit {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.vim-modal-content {
+    background: #1a1a1a;
+    color: #e0e0e0;
+    padding: 2rem 3rem;
+    border-radius: 8px;
+    text-align: center;
+    min-width: 300px;
+    box-shadow: 0 0 24px #000;
+    font-family: 'Geist Mono', monospace;
+    transform: translate(40px) scale(0.98);
+    transition: transform 0.3s cubic-bezier(.4,2.6,1);
+}
+
+.vim-modal.show 
+.vim-modal-content {
+    transform: translateY(0) scale(1);
+}
+
+    .vim-modal-content h2 {
+        margin-bottom: 1.5rem;
+        font-size: 2rem;
+        letter-spacing: 1px;
+    }
+
+#vimStats {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+}
+
+.vim-container.btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.vim-close-btn {
+    background: #282828;
+    color: #e0e0e0;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.vim-save-btn {
+    background: #282828;
+    color: #e0e0e0;
+    border: inset;
+    padding: 0.5rem 1.5rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+    .vim-close-btn:hover {
+        background: #444;
+    }
+
+    .vim-save-btn:hover {
+        background: #444;
+    }
+
+.word-line.pop-out {
+    animation: popOut 0.4s forwards;
+}
+
+/*.word-line.pop-in {
+    animation: popIn 0.4s;
+}
+
+@keyframes popOut {
+    to {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.95);
+    }
+}
+
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(1.05);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}*/

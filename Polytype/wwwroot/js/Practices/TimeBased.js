@@ -1,9 +1,12 @@
 ﻿import { TypingStats } from './TypingLogic.js';
 import { words } from './WordList.js'; 
+import { showResultsModal } from './ResultsModal.js';
 
 let stats = new TypingStats();
 
 // Separate this into another module
+let displayedWords = [];
+let userInputs = [];
 let time = 60;
 let timerInterval = 0;
 let timeLeft = time;
@@ -11,7 +14,16 @@ let timerActive = true;
 let currentWord = 0; 
 let currentInput = "";
 let lastCaretLine = getWordLine(0);
-let userInputs = [];
+const WORDS_PER_LINE = 10;
+const LINES_PER_BATCH = 3;
+const WORDS_BATCH_SIZE = WORDS_PER_LINE * LINES_PER_BATCH; 
+
+let batchIndex = 0;
+
+// For word displaying
+let wordsArray = [...words];
+//const wordsArray = document.getElementById('words').textContent.trim().split(/\s+/);
+//const WORDS_BATCH_SIZE = 30;
 
 console.log(stats.start());
 
@@ -23,6 +35,17 @@ function setTime(t, event) {
     if (event) event.target.classList.add('selected');
     resetPractice();
 }
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.time-btn').forEach(btn => {
+        btn.addEventListener('click', (event) => {
+            const t = parseInt(btn.textContent, 10);
+            setTime(t, event);
+        });
+    });
+});
+
 
 function getWordLine(wordIndex) {
     const wordSpan = document.getElementById(`word${wordIndex}`);
@@ -62,8 +85,8 @@ function startTimer() {
             timerActive = false;
             disableTyping();
              // Redirect this into another module 
-             document.getElementById('timer').textContent = "Time's up!";
-            showResults();
+            window.location.href = `/Results/PracticeResults?wpm=${stats.getWPM()}&cpm=${stats.getCPM()}&accuracy=${stats.getAccuracy()}`; 
+            //showResults();
         }
     }, 1000);
 }
@@ -84,18 +107,28 @@ function updateTimer() {
         timer.classList.remove('warning');
     }
 }
-function initialRenderWords() {
-    const wordsDiv = document.getElementById('words');
-    wordsDiv.innerHTML = words.map((word, i) =>
-        `<span class="word" id="word${i}">${word}</span>${i < words.length - 1 ? ' ' : ''}`
-    ).join('');
-}
+//function initialRenderWords() {
+//    const wordsDiv = document.getElementById('words');
+//    wordsDiv.innerHTML = words.map((word, i) =>
+//        `<span class="word" id="word${i}">${word}</span>${i < words.length - 1 ? ' ' : ''}`
+//    ).join('');
+//}
+
+//function initialRenderWords() {
+//    displayedWords = [];
+//    for (let i = 0; i < WORDS_BATCH_SIZE; i++) {
+//        const word = wordsArray[Math.floor(Math.random() * wordsArray.length)];
+//        displayedWords.push(word);
+//    }
+//    renderDisplayedWords();
+//}
 
 function updateCurrentWordDisplay() {
     const wordSpan = document.getElementById(`word${currentWord}`);
     if (!wordSpan) return;
 
-    const word = words[currentWord];
+    const word = displayedWords[currentWord];
+    if (!word) return;
     let html = '';
 
     let caretInserted = false;
@@ -127,7 +160,7 @@ function updateCurrentWordDisplay() {
 }
 
 function updateWordClasses() {
-    for (let i = 0; i < words.length; i++) {
+    for (let i = 0; i < displayedWords.length; i++) {
         const wordSpan = document.getElementById(`word${i}`);
         if (!wordSpan) continue;
         wordSpan.classList.remove('current', 'correct');
@@ -140,36 +173,123 @@ function updatePreviousWordDisplay(wordIndex) {
     if (!wordSpan) return;
     const input = userInputs[wordIndex] || "";
     let wordHtml = '';
-    for (let j = 0; j < words[wordIndex].length; j++) {
+    for (let j = 0; j < displayedWords[wordIndex].length; j++) {
         let charClass = '';
         if (j < input.length) {
-            charClass = input[j] === words[wordIndex][j] ? 'correct-char' : 'incorrect-char';
+            charClass = input[j] === displayedWords[wordIndex][j] ? 'correct-char' : 'incorrect-char';
         }
-        wordHtml += `<span class="char ${charClass}">${words[wordIndex][j]}</span>`;
+        wordHtml += `<span class="char ${charClass}">${displayedWords[wordIndex][j]}</span>`;
     }
     wordSpan.innerHTML = wordHtml;
 }
 
+
 function updateCurrentWordClass(isCorrect) {
-    if (currentWord >= words.length) return; // Prevent out-of-bounds access
+    if (currentWord >= displayedWords.length) return; // Prevent out-of-bounds access
     const wordSpan = document.getElementById(`word${currentWord}`);
     if (!wordSpan) return; // Defensive: element not found
     wordSpan.classList.remove('incorrect', 'correct');
     if (isCorrect === true) wordSpan.classList.add('correct');
     else if (isCorrect === false) wordSpan.classList.add('incorrect');
 }
-function handleKeydown(e) {
-    if (!timerActive) return;
-    if (currentWord >= words.length) {
-        disableTyping();
-        clearInterval(timerInterval);
-        document.getElementById('timer').textContent = "Completed";
-        // Redirect into the result page 
+
+
+function renderDisplayedWords() {
+    const wordsDiv = document.getElementById('words');
+    if (!wordsDiv) return;
+
+    let html = '';
+    for (let line = 0; line < LINES_PER_BATCH; line++) {
+        let lineWords = displayedWords.slice(line * WORDS_PER_LINE, (line + 1) * WORDS_PER_LINE);
+        html += `<div class="word-line" id="line${line}">` +
+            lineWords.map((word, i) =>
+                `<span class="word" id="word${line * WORDS_PER_LINE + i}">${word}</span>`
+            ).join(' ') +
+            `</div>`;
+    }
+    wordsDiv.innerHTML = html;
+}
+
+
+function loadBatch() {
+
+    if (!wordsArray.length) {
+        console.error("wordsArray is empty. Cannot load batch.");
+        displayedWords = [];
         return;
     }
+    displayedWords = [];
+    let startIdx = batchIndex * WORDS_BATCH_SIZE;
+    let endIdx = startIdx + WORDS_BATCH_SIZE;
+
+    // If not enough words left, refill or loop,  or end practice
+    if (startIdx >= wordsArray.length) {
+        batchIndex = 0;
+        startIdx = 0;
+        endIdx = WORDS_BATCH_SIZE;
+    }
+    for (let i = startIdx; i < endIdx; i++) {
+        // Loop around if you want infinite practice
+        const word = wordsArray[i % wordsArray.length];
+        displayedWords.push(word);
+    }
+    if (typeof displayedWords[currentWord] !== "string") {
+            console.log(displayedWords[currentWord]);
+            return;
+        }
+        
+    
+    renderDisplayedWords();
+    currentWord = 0;
+    updateWordClasses();
+    updateCurrentWordClass();
+}
+
+
+function onLineFinished() {
+    // Animate the first line out
+    const firstLine = document.querySelector('.word-line');
+    if (firstLine) {
+        firstLine.classList.add('pop-out');
+        setTimeout(() => {
+            // Remove the first line from displayedWords
+            displayedWords = displayedWords.slice(WORDS_PER_LINE);
+
+            // Add new words to the end (looping if needed)
+            for (let i = 0; i < WORDS_PER_LINE; i++) {
+                const nextWordIdx = (batchIndex * WORDS_BATCH_SIZE + displayedWords.length + i) % wordsArray.length;
+                displayedWords.push(wordsArray[nextWordIdx]);
+            }
+            batchIndex++;
+            // Re-renderline
+            renderDisplayedWords();
+
+            // Animate the new last line in
+            const lines = document.querySelectorAll('.word-line');
+            if (lines.length > 0) {
+                lines[lines.length - 1].classList.add('pop-in'); 
+            }
+        }, 100); // Match the animation duration
+    }
+}
+ function handleKeydown(e) {
+    if (!timerActive) return;
+    //if (currentWord >= words.length) {
+    //    disableTyping();
+    //    clearInterval(timerInterval);
+    //    document.getElementById('timer').textContent = "Completed";
+    //    // Redirect into the result page 
+    //    return;
+    //}
     if (e.key === ' ') {
         e.preventDefault();
-        stats.registerInput(currentInput, words[currentWord]);
+     
+
+        if (typeof displayedWords[currentWord] !== "string") {
+            console.log(displayedWords[currentWord]);
+            return;
+        }
+        stats.registerInput(currentInput, displayedWords[currentWord]);
         console.log(stats.getElapsedMinutes());
         console.log('WPM: ', stats.getWPM());
         console.log('CPM:', stats.getCPM());
@@ -178,7 +298,7 @@ function handleKeydown(e) {
             return;
         }
         userInputs[currentWord] = currentInput;
-        if (currentInput.trim() === words[currentWord].trim()) {
+        if (currentInput.trim() === displayedWords[currentWord].trim()) {
             updateCurrentWordClass(true);
         } else {
             updateCurrentWordClass(false);
@@ -188,21 +308,33 @@ function handleKeydown(e) {
             updatePreviousWordDisplay(i);
         }
         currentInput = "";
-        currentWord++;
-        updateWordClasses();
-        updateCurrentWordDisplay();
-        checkCaretLineChange();
+        if (currentWord < displayedWords.length - 1) {
+            currentWord++;
+            updateWordClasses();
+            updateCurrentWordDisplay();
+            checkCaretLineChange();
 
-        if (currentWord >= words.length) {
-            disableTyping();
-            clearInterval(timerInterval);
-            document.getElementById('timer').textContent = "Completed";
-            showResults();
-            return;
+            // Call onLineFinished when a line is completed
+            //if (currentWord % WORDS_PER_LINE === 0) {
+            //    onLineFinished();
+            //}
+        } else {
+            // End of batch: load next batch
+            batchIndex++;
+            loadBatch();
+            //onLineFinished();
         }
 
+        //if (currentWord >= words.length) {
+        //    disableTyping();
+        //    clearInterval(timerInterval);
+        //    window.location.href = `/Results/PracticeResults?wpm=${stats.getWPM()}&cpm=${stats.getCPM()}&accuracy=${stats.getAccuracy()}`; 
+        //    showResults();
+        //    return;
+        //}
+
         if (isNewVisualLine(currentWord)) {
-            const caret = document.querySelector('.caret');
+            const caret = document.querySelector('.caret')
             if (caret) {
                 caret.classList.add('new-line');
                 setTimeout(() => caret.classList.remove('new-line'), 200);
@@ -224,7 +356,6 @@ function handleKeydown(e) {
 
     } else if (e.key.length === 1) {
         currentInput += e.key;
-        //stats.registerInput(currentInput, words[currentWord]);
         updateWordClasses();
         checkCaretLineChange();
         updateCurrentWordDisplay();
@@ -232,7 +363,7 @@ function handleKeydown(e) {
         currentInput = currentInput.slice(0, -1);
         updateWordClasses();
         updateCurrentWordDisplay();
-        logCaretPosition();
+        //logCaretPosition();
         checkCaretLineChange();
         stats.recordBackspace && stats.recordBackspace();
     }
@@ -260,7 +391,12 @@ function resetPractice() {
     currentInput = "";
     stats.reset();
     userInputs = [];
-    initialRenderWords();
+    displayedWords = [];
+    batchIndex = 0;
+    //appendWords();
+    loadBatch();
+    onLineFinished();
+    //initialRenderWords();
     updateWordClasses();
     updateCurrentWordDisplay();
     updateTimer();
@@ -270,18 +406,20 @@ function resetPractice() {
         stats.start();
         startTimer();
     }, 500);
+
 }
-
-
-// Showing stats
 function showResults() {
     const wpm = stats.getWPM();
     const cpm = stats.getCPM();
     const accuracy = stats.getAccuracy();
-    // render this on like vim focus mode
-    alert(`WPM: ${wpm}\nCPM: ${cpm}\nAccuracy: ${accuracy}`);
-}
 
+    const statsHtml = `
+        <div>WPM: <strong>${wpm}</strong></div>
+        <div>CPM: <strong>${cpm}</strong></div>
+        <div>Accuracy: <strong>${accuracy}%</strong></div>
+    `;
+    showResultsModal({ statsHtml });
+}
 
 window.onload = function () {
     //renderWords();
@@ -301,7 +439,9 @@ window.onload = function () {
             updateCurrentWordDisplay();
         }, 0);
     });
-    initialRenderWords();
+    //initialRenderWords();
+    onLineFinished();
+    loadBatch();
     updateWordClasses();
     updateCurrentWordDisplay();
     disableTyping();

@@ -24,6 +24,10 @@
         this.typedChars += input.length;
         this.totalWords++;
 
+        if (typeof expected !== "string") {
+            console.error("Expected word is undefined or not a string.", expected);
+        }
+
         if (input === expected) {
             this.correctWords++;
             this.correctChars += input.length;
@@ -75,7 +79,8 @@
 
     getWPM() {
         const minutes = this.getElapsedMinutes() || 1;
-        return Math.round(this.correctWords / minutes);
+        //return Math.round(this.correctWords / minutes);
+        return Math.round((this.correctWords) / minutes);
     }
 
     getCPM() {
